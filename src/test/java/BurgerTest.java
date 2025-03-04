@@ -1,3 +1,4 @@
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -22,6 +23,7 @@ public class BurgerTest {
     private static final float BUN_PRICE = 4.04f;
     private static final String INGREDIENT_NAME = "SALSA";
     private static final float INGREDIENT_PRICE = 1.03f;
+    private static final float OVERALL_PRICE = BUN_PRICE*2+INGREDIENT_PRICE;
     private static final int FIRST_INGREDIENT_INDEX = 0;
     private static final float DIFF = 0.05f;
 
@@ -55,8 +57,11 @@ public class BurgerTest {
     @Test
     public void getPriceTest_ok(){
         burger.setBuns(bun);
-        burger.getPrice();
-        Mockito.verify(burger).getPrice();
+        burger.addIngredient(ingredient);
+        Mockito.when(bun.getPrice()).thenReturn(BUN_PRICE);
+        Mockito.when(ingredient.getPrice()).thenReturn(INGREDIENT_PRICE);
+        float price = burger.getPrice();
+        Assert.assertEquals("PRICE NOT MATCHED",OVERALL_PRICE,price,DIFF);
     }
 
     @Test
