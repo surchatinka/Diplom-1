@@ -21,11 +21,19 @@ public class BurgerTest {
     private Burger burger = new Burger();
     private static final String BUN_NAME = "Null-bun";
     private static final float BUN_PRICE = 4.04f;
-    private static final String INGREDIENT_NAME = "SALSA";
+    private static final String INGREDIENT_NAME = "MAYO";
     private static final float INGREDIENT_PRICE = 1.03f;
     private static final float OVERALL_PRICE = BUN_PRICE*2+INGREDIENT_PRICE;
     private static final int FIRST_INGREDIENT_INDEX = 0;
     private static final float DIFF = 0.05f;
+    private static final String BURGER_RECEIPT =
+                    "(==== Null-bun ====)\r\n" +
+                            "= sauce MAYO =\r\n" +
+                            "(==== Null-bun ====)\r\n" +
+                            "\r\n" +
+                            "Price: 9,110000\r\n";
+
+
 
     @Test
     public void setBunsTest_ok(){
@@ -73,7 +81,7 @@ public class BurgerTest {
         Mockito.when(ingredient.getName()).thenReturn(INGREDIENT_NAME);
         Mockito.when(ingredient.getPrice()).thenReturn(INGREDIENT_PRICE);
         Mockito.when(ingredient.getType()).thenReturn(IngredientType.SAUCE);
-        burger.getReceipt();
-        Mockito.verify(burger).getReceipt();
+        String receipt = burger.getReceipt();
+        Assert.assertEquals("WRONG RECEIPT",receipt,BURGER_RECEIPT);
     }
 }
