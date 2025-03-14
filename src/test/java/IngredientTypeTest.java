@@ -25,5 +25,4 @@ public class IngredientTypeTest {
     public void checkIngredientTypeIsExist_ok() {
         Assert.assertNotNull(ingredientType);
     }
-
 }

@@ -3,7 +3,6 @@ import org.junit.Before;
 import org.junit.Test;
 import praktikum.Bun;
 
-
 public class BunTest {
     private Bun bun;
     private static final String BUN_NAME = "Null-bun";

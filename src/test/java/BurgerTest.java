@@ -3,7 +3,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import praktikum.Bun;
 import praktikum.Burger;
@@ -17,8 +16,10 @@ public class BurgerTest {
     private Bun bun;
     @Mock
     private Ingredient ingredient;
-    @Spy
-    private Burger burger = new Burger();
+    @Mock
+    private Ingredient ingredient2;
+
+    private final Burger burger = new Burger();
     private static final String BUN_NAME = "Null-bun";
     private static final float BUN_PRICE = 4.04f;
     private static final String INGREDIENT_NAME = "MAYO";
@@ -27,39 +28,38 @@ public class BurgerTest {
     private static final int FIRST_INGREDIENT_INDEX = 0;
     private static final float DIFF = 0.05f;
     private static final String BURGER_RECEIPT =
-                    "(==== Null-bun ====)\r\n" +
+                            "(==== Null-bun ====)\r\n" +
                             "= sauce MAYO =\r\n" +
                             "(==== Null-bun ====)\r\n" +
                             "\r\n" +
                             "Price: 9,110000\r\n";
 
-
-
     @Test
     public void setBunsTest_ok(){
         burger.setBuns(bun);
-        Mockito.verify(burger).setBuns(bun);
+        Assert.assertEquals(burger.bun,bun);
     }
 
     @Test
     public void addIngredientTest_ok(){
         burger.addIngredient(ingredient);
-        Mockito.verify(burger).addIngredient(ingredient);
+        Assert.assertTrue(burger.ingredients.contains(ingredient));
     }
 
     @Test
     public void removeIngredient_ok(){
         burger.addIngredient(ingredient);
         burger.removeIngredient(FIRST_INGREDIENT_INDEX);
-        Mockito.verify(burger).removeIngredient(FIRST_INGREDIENT_INDEX);
+        Assert.assertFalse(burger.ingredients.contains(ingredient));
     }
 
     @Test
     public void moveIngredient_ok(){
         burger.addIngredient(ingredient);
-        burger.addIngredient(ingredient);
+        burger.addIngredient(ingredient2);
         burger.moveIngredient(FIRST_INGREDIENT_INDEX,FIRST_INGREDIENT_INDEX+1);
-        Mockito.verify(burger).moveIngredient(FIRST_INGREDIENT_INDEX,FIRST_INGREDIENT_INDEX+1);
+        Assert.assertEquals(burger.ingredients.get(0),ingredient2);
+        Assert.assertEquals(burger.ingredients.get(1),ingredient);
     }
 
     @Test
