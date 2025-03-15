@@ -1,4 +1,4 @@
-import org.junit.Assert;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -7,13 +7,15 @@ import praktikum.IngredientType;
 @RunWith(Parameterized.class)
 public class IngredientTypeTest {
 
+    private static final IngredientType INGREDIENT_TYPE_SAUCE = IngredientType.SAUCE;
+    private static final IngredientType INGREDIENT_TYPE_FILLING = IngredientType.FILLING;
     private final IngredientType ingredientType;
 
     public IngredientTypeTest(IngredientType type){
         this.ingredientType = type;
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "IngredientType -  {0}")
     public static Object[][] testData(){
         return new Object[][]{
                 {IngredientType.SAUCE},
@@ -22,7 +24,19 @@ public class IngredientTypeTest {
     }
 
     @Test
-    public void checkIngredientTypeIsExist_ok() {
-        Assert.assertNotNull(ingredientType);
+    public void checkIngredientTypeIsExistTest_ok() {
+        SoftAssertions softly = new SoftAssertions();
+
+        softly.assertThat(ingredientType).isNotNull();
+        switch(ingredientType){
+            case SAUCE:
+                softly.assertThat(ingredientType).isEqualTo(INGREDIENT_TYPE_SAUCE);
+                break;
+            case FILLING:
+                softly.assertThat(ingredientType).isEqualTo(INGREDIENT_TYPE_FILLING);
+                break;
+            default: break;
+        }
+        softly.assertAll();
     }
 }

@@ -8,6 +8,7 @@ import praktikum.Bun;
 import praktikum.Burger;
 import praktikum.Ingredient;
 import praktikum.IngredientType;
+import org.assertj.core.api.SoftAssertions;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BurgerTest {
@@ -58,8 +59,10 @@ public class BurgerTest {
         burger.addIngredient(ingredient);
         burger.addIngredient(ingredient2);
         burger.moveIngredient(FIRST_INGREDIENT_INDEX,FIRST_INGREDIENT_INDEX+1);
-        Assert.assertEquals(burger.ingredients.get(0),ingredient2);
-        Assert.assertEquals(burger.ingredients.get(1),ingredient);
+        SoftAssertions softly = new SoftAssertions();
+        softly.assertThat(burger.ingredients.get(0)).isEqualTo(ingredient2);
+        softly.assertThat(burger.ingredients.get(1)).isEqualTo(ingredient);
+        softly.assertAll();
     }
 
     @Test

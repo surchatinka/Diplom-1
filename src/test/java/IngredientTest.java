@@ -11,7 +11,7 @@ public class IngredientTest {
     private static final float INGREDIENT_PRICE = 5.45f;
     private static final float DELTA = 0.0005f;
 
-    Ingredient ingredient;
+    private Ingredient ingredient;
 
     @Before
     public void before(){
